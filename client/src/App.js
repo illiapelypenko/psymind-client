@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TableSample from './components/TableSample.tsx';
+import TableSample from './components/TableSample.js';
 
 function App() {
 	return (
