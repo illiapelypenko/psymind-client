@@ -5,6 +5,8 @@ import {
 	createStyles,
 	makeStyles
 } from '@material-ui/core/styles';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,6 +19,7 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import './Table.scss';
 
 const StyledTableCell = withStyles(theme =>
 	createStyles({
@@ -27,20 +30,23 @@ const StyledTableCell = withStyles(theme =>
 		},
 		root: {
 			fontSize: 16,
-			'&:nth-of-type(5n)': {
+			'&:nth-of-type(6n)': {
 				width: '5%'
 			},
-			'&:nth-of-type(5n-1)': {
+			'&:nth-of-type(6n-1)': {
 				width: '5%'
 			},
-			'&:nth-of-type(5n-2)': {
+			'&:nth-of-type(6n-2)': {
 				width: '15%'
 			},
-			'&:nth-of-type(5n-3)': {
-				width: '45%'
+			'&:nth-of-type(6n-3)': {
+				width: '40%'
 			},
-			'&:nth-of-type(5n-4)': {
-				width: '30%'
+			'&:nth-of-type(6n-4)': {
+				width: '25%'
+			},
+			'&:nth-of-type(6n-5)': {
+				width: '10%'
 			},
 			spellcheck: false
 		}
@@ -75,16 +81,19 @@ const useStyles = makeStyles({
 
 const initialTable = [
 	{
+		date: new Date('02-02-2017'),
 		event: 'event 1',
 		thought: 'thought 1',
 		reaction: 'reaction 1'
 	},
 	{
+		date: new Date('03-03-2018'),
 		event: 'event 2',
 		thought: 'thought 2',
 		reaction: 'reaction 2'
 	},
 	{
+		date: new Date('04-04-2019'),
 		event: 'event 3',
 		thought: 'thought 3',
 		reaction: 'reaction 3'
@@ -94,6 +103,7 @@ const initialTable = [
 export default function CustomizedTables() {
 	const classes = useStyles();
 	const [table, setTable] = useState([]);
+	const [date, setDate] = useState(new Date());
 	const [event, setEvent] = useState('');
 	const [thought, setThought] = useState('');
 	const [reaction, setReaction] = useState('');
@@ -108,11 +118,13 @@ export default function CustomizedTables() {
 
 	const handleAddRow = e => {
 		table.push({
+			date,
 			event,
 			thought,
 			reaction
 		});
 
+		setDate(new Date());
 		setEvent('');
 		setThought('');
 		setReaction('');
@@ -126,6 +138,7 @@ export default function CustomizedTables() {
 
 	const handleEditRow = (e, index) => {
 		//set edition
+		setDate(table[index].date);
 		setEvent(table[index].event);
 		setThought(table[index].thought);
 		setReaction(table[index].reaction);
@@ -141,6 +154,7 @@ export default function CustomizedTables() {
 			<Table aria-label='customized table'>
 				<TableHead>
 					<TableRow>
+						<StyledTableCell align='center'>Date</StyledTableCell>
 						<StyledTableCell align='center'>Event</StyledTableCell>
 						<StyledTableCell align='center'>Thought</StyledTableCell>
 						<StyledTableCell align='center'>Reaction</StyledTableCell>
@@ -151,6 +165,7 @@ export default function CustomizedTables() {
 				<TableBody>
 					{table.map((row, index) => (
 						<StyledTableRow key={index} hover>
+							<StyledTableCell>{row.date.toDateString()}</StyledTableCell>
 							<StyledTableCell>{row.event}</StyledTableCell>
 							<StyledTableCell>{row.thought}</StyledTableCell>
 							<StyledTableCell>{row.reaction}</StyledTableCell>
@@ -164,6 +179,9 @@ export default function CustomizedTables() {
 					))}
 
 					<StyledTableRow key={-1}>
+						<StyledTableCell>
+							<DatePicker selected={date} onChange={setDate} />
+						</StyledTableCell>
 						<StyledTableCell>
 							<TextField
 								id='outlined-basic'
