@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import TableSample from './components/TableSample.js';
+import { connect } from 'react-redux';
 
 function App() {
 	return (
@@ -10,4 +11,4 @@ function App() {
 	);
 }
 
-export default App;
+export default connect((state, props) => ({}), {})(App);
