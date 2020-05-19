@@ -1,8 +1,20 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from './reducer.js';
+import thunk from 'redux-thunk';
 
 const initialState = {
-	table: 'initial table',
+	token: '',
+	userName: '',
+	table: [],
+	signIn: false,
+	beliefs: [],
 };
 
-export default createStore(reducer, initialState); // {getState(), subscribe(func), discharge(action)}
+export default createStore(
+	reducer,
+	initialState,
+	compose(
+		applyMiddleware(thunk),
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	)
+); // {getState(), subscribe(func), discharge(action)}

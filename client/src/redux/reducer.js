@@ -1,9 +1,22 @@
 export default (state, action) => {
 	switch (action.type) {
-		case 'GET_TABLE':
-			return { ...state, table: 'get table' };
-		case 'POST_TABLE':
-			return { ...state, table: 'post table' };
+		case 'SET_TOKEN':
+			return { ...state, token: action.payload.token };
+		case 'SET_USERNAME':
+			return { ...state, userName: action.payload.userName };
+		case 'SET_SIGNIN':
+			localStorage.setItem('token', action.payload.token);
+			return {
+				...state,
+				signIn: action.payload.signIn,
+				token: action.payload.token,
+				userName: action.payload.userName,
+			};
+		case 'SET_BELIEFS':
+			return {
+				...state,
+				beliefs: action.payload,
+			};
 		default:
 			return state;
 	}

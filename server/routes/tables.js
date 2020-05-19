@@ -1,12 +1,14 @@
 const express = require('express');
-const Item = require('../models/Item');
+const Table = require('../models/Table');
+const Client = require('../models/Client');
 const router = express.Router();
 
-router.post('/upload', async (req, res) => {
-	try {
-		res.send();
-	} catch (e) {
-		res.status(400).send();
-		console.log(e);
-	}
+router.get('/table', async (req, res) => {
+	res.json();
 });
+
+router.post('/table', async (req, res) => {
+	res.json();
+});
+
+module.exports = router;
