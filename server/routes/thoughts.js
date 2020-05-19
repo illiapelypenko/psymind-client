@@ -64,8 +64,9 @@ router.put('/thought', async (req, res) => {
   }
 
   try {
-    const { id } = req.body.thought;
-    await Thought.findByIdAndUpdate(id, req.body.thought);
+    const { _id } = req.body.thought;
+    console.log(req.body);
+    await Thought.findByIdAndUpdate(_id, req.body.thought);
     const thoughts = await Thought.find({ clientId: isVerified._id });
     res.status(200).json(thoughts);
   } catch (e) {

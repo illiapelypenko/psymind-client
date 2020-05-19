@@ -41,7 +41,7 @@ export default function ThoughtsTable() {
           dispatch(removeThought(token, oldData._id))
       }}
       detailPanel={(rowData) => {
-        return <QuestionsTable index={rowData.tableData.id} />;
+        return <QuestionsTable tindex={thoughts.findIndex(thought => thought.name === rowData.name)} />;
       }}
       onRowClick={(event, rowData, togglePanel) => togglePanel()}
     />
@@ -49,7 +49,7 @@ export default function ThoughtsTable() {
 }
 
 // {
-//   thought,
+//   name,
 //   clientId,
 //   questions: [
 //     {
