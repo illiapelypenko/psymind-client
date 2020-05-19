@@ -17,6 +17,11 @@ export default (state, action) => {
 				...state,
 				beliefs: action.payload,
 			};
+		case 'SET_THOUGHTS':
+			return {
+				...state,
+				thoughts: action.payload,
+			};
 		default:
 			return state;
 	}

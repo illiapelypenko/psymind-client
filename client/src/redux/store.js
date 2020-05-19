@@ -8,6 +8,7 @@ const initialState = {
 	table: [],
 	signIn: false,
 	beliefs: [],
+	thoughts: [],
 };
 
 export default createStore(

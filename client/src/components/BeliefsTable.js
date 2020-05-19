@@ -10,7 +10,7 @@ export default function BeliefsTable() {
 	const dispatch = useDispatch();
 
 	const [state, setState] = useState({
-		columns: [{ title: 'Belief', field: 'name' }],
+		columns: [{ title: 'Убеждение', field: 'name' }],
 		data: beliefs,
 	});
 

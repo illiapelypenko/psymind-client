@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { secretKey } = require('../config');
 const Belief = require('../models/Belief');
-const Client = require('../models/Client');
 
 router.post('/getbeliefs', async (req, res) => {
 	const token = req.body.token;
@@ -19,7 +18,6 @@ router.post('/getbeliefs', async (req, res) => {
 
 	try {
 		const beliefs = await Belief.find({ clientId: isVerified._id });
-		console.log(beliefs);
 		res.status(200).json(beliefs);
 	} catch (e) {
 		res.status(400).send('server error');
@@ -75,27 +73,6 @@ router.put('/belief', async (req, res) => {
 		console.log(e);
 	}
 });
-
-// router.post('/subbelief', async (req, res) => {
-// 	let isVerified;
-// 	try {
-// 		isVerified = await jwt.verify(req.body.token, secretKey);
-// 	} catch (e) {
-// 		res.status(500).send('invalid token');
-// 		console.log(e);
-// 		return;
-// 	}
-
-// 	try {
-// 		const { id } = req.body.belief;
-// 		await Belief.findByIdAndUpdate(id, req.body.belief);
-// 		const beliefs = await Belief.find({ clientId: isVerified._id });
-// 		res.status(200).json(beliefs);
-// 	} catch (e) {
-// 		res.status(400).send('server error');
-// 		console.log(e);
-// 	}
-// });
 
 router.post('/removebelief', async (req, res) => {
 	let isVerified;

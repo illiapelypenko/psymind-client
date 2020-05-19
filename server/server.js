@@ -6,6 +6,7 @@ const { mongodb } = require('./config');
 const tables = require('./routes/tables');
 const clients = require('./routes/clients');
 const beliefs = require('./routes/beliefs');
+const thoughts = require('./routes/thoughts');
 const app = express();
 
 const { port } = require('./config');
@@ -16,6 +17,7 @@ app.use(cors());
 app.use('/api/tables', tables);
 app.use('/api/clients', clients);
 app.use('/api/beliefs', beliefs);
+app.use('/api/thoughts', thoughts);
 
 mongoose
 	.connect(mongodb, {

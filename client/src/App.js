@@ -13,7 +13,7 @@ import {
 import axios from 'axios';
 import serverURL from './serverURL.js';
 import UserPage from './components/UserPage';
-import { getBeliefs } from './redux/actions';
+import { getBeliefs, getThoughts } from './redux/actions';
 
 function App() {
 	const token = useSelector((state) => state.token);
@@ -23,6 +23,7 @@ function App() {
 	useEffect(() => {
 		trySignIn();
 		dispatch(getBeliefs(token));
+		dispatch(getThoughts(token));
 	}, [signIn, token]);
 
 	const trySignIn = async () => {
