@@ -11,7 +11,12 @@ router.put('/isclient', async (req, res) => {
 		const isVerified = await jwt.verify(token, secretKey);
 		const client = await Client.findById(isVerified._id);
 		if (client) {
-			res.json({ isClient: true, userName: client.name });
+			res.json({
+				isClient: true,
+				userName: client.name,
+				isPsychologist: client.isPsychologist,
+				chainedAccounts: client.chainedAccounts,
+			});
 		} else {
 			res.json({ isClient: false });
 		}
@@ -23,7 +28,7 @@ router.put('/isclient', async (req, res) => {
 
 router.post('/register', async (req, res) => {
 	try {
-		let { name, email, password } = req.body;
+		let { name, email, password, isPsychologist } = req.body;
 		const clientEmail = await Client.findOne({ email });
 		const clientName = await Client.findOne({ name });
 
@@ -43,11 +48,18 @@ router.post('/register', async (req, res) => {
 			name,
 			email,
 			password,
+			isPsychologist,
+			chainedAccounts: [],
 		});
 		const doc = await newClient.save();
 		const token = jwt.sign({ _id: doc._id }, secretKey);
 
-		res.json({ token, userName: doc.name });
+		res.json({
+			token,
+			userName: doc.name,
+			isPsychologist: doc.isPsychologist,
+			chainedAccounts: doc.chainedAccounts,
+		});
 	} catch (e) {
 		res.status(500).json({ error: 'SERVER ERROR' });
 		console.log(e);
@@ -71,7 +83,12 @@ router.post('/login', async (req, res) => {
 		}
 		const token = jwt.sign({ _id: client._id }, secretKey);
 
-		res.json({ token, userName: client.name });
+		res.json({
+			token,
+			userName: client.name,
+			isPsychologist: client.isPsychologist,
+			chainedAccounts: client.chainedAccounts,
+		});
 	} catch (e) {
 		res.status(500).json({ error: 'SERVER ERROR' });
 		console.log(e);

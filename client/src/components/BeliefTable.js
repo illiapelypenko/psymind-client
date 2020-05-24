@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { useDispatch, useSelector } from 'react-redux';
 import { editBelief } from '../redux/actions';
+import { red } from '@material-ui/core/colors';
 
 export default function BeliefTable({ index }) {
 	const [state, setState] = useState({
 		columns: [
-			{ title: 'За', field: 'forr' },
-			{ title: 'Против', field: 'against' },
+			{ title: 'For', field: 'forr' },
+			{ title: 'Against', field: 'against' },
 		],
 		data: [],
 	});
@@ -33,9 +34,9 @@ export default function BeliefTable({ index }) {
 		setState({ ...state, data: newData });
 	}, [beliefs]);
 
-
 	return (
 		<MaterialTable
+			style={{}}
 			title={beliefs[index].name}
 			columns={state.columns}
 			data={state.data}
@@ -47,31 +48,45 @@ export default function BeliefTable({ index }) {
 				onRowAdd: (newData) => {
 					const forr = newData.forr ? newData.forr : '';
 					const against = newData.against ? newData.against : '';
-					return dispatch(editBelief(token, {
-						forr: [...beliefs[index].forr, forr],
-						against: [...beliefs[index].against, against],
-						id: beliefs[index]._id
-					}));
+					return dispatch(
+						editBelief(token, {
+							forr: [...beliefs[index].forr, forr],
+							against: [...beliefs[index].against, against],
+							id: beliefs[index]._id,
+						})
+					);
 				},
 				onRowUpdate: (newData, oldData) => {
-					const belief = { ...beliefs[index] }
-					belief.forr.splice(belief.forr.indexOf(oldData.forr), 1, newData.forr);
-					belief.against.splice(belief.against.indexOf(oldData.against), 1, newData.against);
-					return dispatch(editBelief(token, {
-						forr: belief.forr,
-						against: belief.against,
-						id: belief._id
-					}));
+					const belief = { ...beliefs[index] };
+					belief.forr.splice(
+						belief.forr.indexOf(oldData.forr),
+						1,
+						newData.forr
+					);
+					belief.against.splice(
+						belief.against.indexOf(oldData.against),
+						1,
+						newData.against
+					);
+					return dispatch(
+						editBelief(token, {
+							forr: belief.forr,
+							against: belief.against,
+							id: belief._id,
+						})
+					);
 				},
 				onRowDelete: (oldData) => {
-					const belief = { ...beliefs[index] }
+					const belief = { ...beliefs[index] };
 					belief.forr.splice(belief.forr.indexOf(oldData.forr), 1);
 					belief.against.splice(belief.against.indexOf(oldData.against), 1);
-					return dispatch(editBelief(token, {
-						forr: belief.forr,
-						against: belief.against,
-						id: belief._id
-					}));
+					return dispatch(
+						editBelief(token, {
+							forr: belief.forr,
+							against: belief.against,
+							id: belief._id,
+						})
+					);
 				},
 			}}
 		/>

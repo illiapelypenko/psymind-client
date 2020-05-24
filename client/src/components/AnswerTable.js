@@ -4,44 +4,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editThought } from '../redux/actions';
 
 export default function AnswerTable({ tindex, qindex }) {
-  const [state, setState] = useState({
-    columns: [
-      { title: 'Ответ', field: 'answer' }
-    ],
-    data: [],
-  });
+	const [state, setState] = useState({
+		columns: [{ title: 'Answer', field: 'answer' }],
+		data: [],
+	});
 
-  const thoughts = useSelector((state) => state.thoughts);
-  const token = useSelector((state) => state.token);
-  const dispatch = useDispatch();
+	const thoughts = useSelector((state) => state.thoughts);
+	const token = useSelector((state) => state.token);
+	const dispatch = useDispatch();
 
-  useEffect(() => {
-    setState({ ...state, data: [{ answer: thoughts[tindex].questions[qindex].answer }] });
-  }, [thoughts]);
+	useEffect(() => {
+		setState({
+			...state,
+			data: [{ answer: thoughts[tindex].questions[qindex].answer }],
+		});
+	}, [thoughts]);
 
-  console.log(qindex);
+	console.log(qindex);
 
-  return (
-    <MaterialTable
-      title={thoughts[tindex].questions[qindex].question}
-      columns={state.columns}
-      data={state.data}
-      options={{
-        search: false,
-        paging: false,
-      }}
-      editable={{
-        onRowUpdate: (newData, oldData) => {
-          const thought = { ...thoughts[tindex] }
-          const questions = thought.questions;
-          questions[qindex].answer = newData.answer;
-          return dispatch(editThought(token,
-            thought
-          ));
-        },
-      }}
-    />
-  );
+	return (
+		<MaterialTable
+			title={thoughts[tindex].questions[qindex].question}
+			columns={state.columns}
+			data={state.data}
+			options={{
+				search: false,
+				paging: false,
+			}}
+			editable={{
+				onRowUpdate: (newData, oldData) => {
+					const thought = { ...thoughts[tindex] };
+					const questions = thought.questions;
+					questions[qindex].answer = newData.answer;
+					return dispatch(editThought(token, thought));
+				},
+			}}
+		/>
+	);
 }
 
 // {

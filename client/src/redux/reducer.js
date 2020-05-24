@@ -11,6 +11,8 @@ export default (state, action) => {
 				signIn: action.payload.signIn,
 				token: action.payload.token,
 				userName: action.payload.userName,
+				isPsychologist: action.payload.isPsychologist,
+				chainedAccounts: action.payload.chainedAccounts,
 			};
 		case 'SET_BELIEFS':
 			return {
@@ -21,6 +23,16 @@ export default (state, action) => {
 			return {
 				...state,
 				thoughts: action.payload,
+			};
+		case 'SET_EVENTS':
+			return {
+				...state,
+				events: action.payload,
+			};
+		case 'SET_CHAINED_ACCOUNTS':
+			return {
+				...state,
+				chainedAccounts: action.payload.chainedAccounts,
 			};
 		default:
 			return state;

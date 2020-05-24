@@ -14,6 +14,14 @@ const ClientSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	isPsychologist: {
+		type: Boolean,
+		required: true,
+	},
+	chainedAccounts: {
+		type: [],
+		required: true,
+	},
 });
 
 module.exports = mongoose.model('client', ClientSchema);

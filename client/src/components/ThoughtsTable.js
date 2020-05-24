@@ -5,47 +5,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addThought, removeThought, editThought } from '../redux/actions';
 
 export default function ThoughtsTable() {
-  const thoughts = useSelector((state) => state.thoughts);
-  const token = useSelector((state) => state.token);
-  const dispatch = useDispatch();
+	const thoughts = useSelector((state) => state.thoughts);
+	const token = useSelector((state) => state.token);
+	const dispatch = useDispatch();
 
-  const [state, setState] = useState({
-    columns: [{ title: 'Мысль', field: 'name' }],
-    data: thoughts,
-  });
+	const [state, setState] = useState({
+		columns: [{ title: 'Thought', field: 'name' }],
+		data: thoughts,
+	});
 
-  useEffect(() => {
-    setState({ ...state, data: thoughts });
-  }, [thoughts]);
+	useEffect(() => {
+		setState({ ...state, data: thoughts });
+	}, [thoughts]);
 
-  return (
-    <MaterialTable
-      title='Мои негативные мысли'
-      columns={state.columns}
-      data={state.data}
-      options={{
-        paging: false,
-      }}
-      editable={{
-        onRowAdd: (newData) => {
-          return dispatch(addThought(token, {
-            name: newData.name,
-          }))
-        },
-        onRowUpdate: (newData, oldData) =>
-          dispatch(editThought(token, {
-            name: newData.name,
-            id: oldData._id
-          })),
-        onRowDelete: (oldData) =>
-          dispatch(removeThought(token, oldData._id))
-      }}
-      detailPanel={(rowData) => {
-        return <QuestionsTable tindex={thoughts.findIndex(thought => thought.name === rowData.name)} />;
-      }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
-    />
-  );
+	return (
+		<MaterialTable
+			title='My negative thoughts'
+			columns={state.columns}
+			data={state.data}
+			options={{
+				paging: false,
+			}}
+			editable={{
+				onRowAdd: (newData) => {
+					return dispatch(
+						addThought(token, {
+							name: newData.name,
+						})
+					);
+				},
+				onRowUpdate: (newData, oldData) =>
+					dispatch(
+						editThought(token, {
+							name: newData.name,
+							id: oldData._id,
+						})
+					),
+				onRowDelete: (oldData) => dispatch(removeThought(token, oldData._id)),
+			}}
+			detailPanel={(rowData) => {
+				return (
+					<QuestionsTable
+						tindex={thoughts.findIndex(
+							(thought) => thought.name === rowData.name
+						)}
+					/>
+				);
+			}}
+			onRowClick={(event, rowData, togglePanel) => togglePanel()}
+		/>
+	);
 }
 
 // {

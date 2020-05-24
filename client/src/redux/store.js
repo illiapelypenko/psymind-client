@@ -9,6 +9,9 @@ const initialState = {
 	signIn: false,
 	beliefs: [],
 	thoughts: [],
+	events: [],
+	isPsychologist: false,
+	chainedAccounts: [],
 };
 
 export default createStore(

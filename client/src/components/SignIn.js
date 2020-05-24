@@ -82,6 +82,7 @@ export default function SignIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const signIn = useSelector((state) => state.signIn);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -118,6 +119,7 @@ export default function SignIn() {
 
 	return (
 		<Grid container component='main' className={classes.root}>
+			{signIn ? <Redirect to='/dashboard' /> : <Redirect to='/signin' />}
 			<Snackbar open={!!error} autoHideDuration={6000}>
 				<MuiAlert elevation={6} variant='filled' severity='error'>
 					{error}
@@ -179,9 +181,6 @@ export default function SignIn() {
 								{/* </Link> */}
 							</Grid>
 						</Grid>
-						<Box mt={5}>
-							<Copyright />
-						</Box>
 					</form>
 				</div>
 			</Grid>

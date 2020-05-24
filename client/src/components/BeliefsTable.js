@@ -10,7 +10,7 @@ export default function BeliefsTable() {
 	const dispatch = useDispatch();
 
 	const [state, setState] = useState({
-		columns: [{ title: 'Убеждение', field: 'name' }],
+		columns: [{ title: 'Belief', field: 'name' }],
 		data: beliefs,
 	});
 
@@ -20,7 +20,7 @@ export default function BeliefsTable() {
 
 	return (
 		<MaterialTable
-			title='Мои негативные убеждения'
+			title='My negative beliefs'
 			columns={state.columns}
 			data={state.data}
 			options={{
@@ -28,19 +28,22 @@ export default function BeliefsTable() {
 			}}
 			editable={{
 				onRowAdd: (newData) => {
-					return dispatch(addBelief(token, {
-						name: newData.name,
-						forr: [],
-						against: []
-					}))
+					return dispatch(
+						addBelief(token, {
+							name: newData.name,
+							forr: [],
+							against: [],
+						})
+					);
 				},
 				onRowUpdate: (newData, oldData) =>
-					dispatch(editBelief(token, {
-						name: newData.name,
-						id: oldData._id
-					})),
-				onRowDelete: (oldData) =>
-					dispatch(removeBelief(token, oldData._id))
+					dispatch(
+						editBelief(token, {
+							name: newData.name,
+							id: oldData._id,
+						})
+					),
+				onRowDelete: (oldData) => dispatch(removeBelief(token, oldData._id)),
 			}}
 			detailPanel={(rowData) => {
 				return <BeliefTable index={rowData.tableData.id} />;

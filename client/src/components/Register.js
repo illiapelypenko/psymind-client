@@ -83,6 +83,7 @@ export default function Register() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState('');
+	const [isPsychologist, setIsPsychologist] = useState(false);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -91,6 +92,7 @@ export default function Register() {
 				name,
 				email,
 				password,
+				isPsychologist,
 			});
 
 			if (res.data.error) {
@@ -106,6 +108,7 @@ export default function Register() {
 					signIn: true,
 					userName: res.data.userName,
 					token: res.data.token,
+					isPsychologist,
 				},
 			});
 			history.push('/');
@@ -175,10 +178,17 @@ export default function Register() {
 							onChange={(e) => setPassword(e.target.value)}
 							value={password}
 						/>
-						{/* <FormControlLabel
-							control={<Checkbox value='remember' color='primary' />}
-							label='Remember me'
-						/> */}
+						<FormControlLabel
+							control={
+								<Checkbox
+									value='isPsychologist'
+									onClick={() => setIsPsychologist(!isPsychologist)}
+									checked={isPsychologist}
+									color='primary'
+								/>
+							}
+							label='I am psychologist'
+						/>
 						<Button
 							type='submit'
 							fullWidth
@@ -192,9 +202,6 @@ export default function Register() {
 								<RouterLink to='/signin'>Sign in</RouterLink>
 							</Grid>
 						</Grid>
-						<Box mt={5}>
-							<Copyright />
-						</Box>
 					</form>
 				</div>
 			</Grid>
