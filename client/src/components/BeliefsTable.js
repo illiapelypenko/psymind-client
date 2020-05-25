@@ -8,6 +8,7 @@ export default function BeliefsTable() {
 	const beliefs = useSelector((state) => state.beliefs);
 	const token = useSelector((state) => state.token);
 	const dispatch = useDispatch();
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 
 	const [state, setState] = useState({
 		columns: [{ title: 'Belief', field: 'name' }],
@@ -26,25 +27,30 @@ export default function BeliefsTable() {
 			options={{
 				paging: false,
 			}}
-			editable={{
-				onRowAdd: (newData) => {
-					return dispatch(
-						addBelief(token, {
-							name: newData.name,
-							forr: [],
-							against: [],
-						})
-					);
-				},
-				onRowUpdate: (newData, oldData) =>
-					dispatch(
-						editBelief(token, {
-							name: newData.name,
-							id: oldData._id,
-						})
-					),
-				onRowDelete: (oldData) => dispatch(removeBelief(token, oldData._id)),
-			}}
+			editable={
+				isPsychologist
+					? {}
+					: {
+							onRowAdd: (newData) => {
+								return dispatch(
+									addBelief(token, {
+										name: newData.name,
+										forr: [],
+										against: [],
+									})
+								);
+							},
+							onRowUpdate: (newData, oldData) =>
+								dispatch(
+									editBelief(token, {
+										name: newData.name,
+										id: oldData._id,
+									})
+								),
+							onRowDelete: (oldData) =>
+								dispatch(removeBelief(token, oldData._id)),
+					  }
+			}
 			detailPanel={(rowData) => {
 				return <BeliefTable index={rowData.tableData.id} />;
 			}}

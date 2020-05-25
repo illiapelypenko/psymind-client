@@ -12,6 +12,7 @@ export default function AnswerTable({ tindex, qindex }) {
 	const thoughts = useSelector((state) => state.thoughts);
 	const token = useSelector((state) => state.token);
 	const dispatch = useDispatch();
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 
 	useEffect(() => {
 		setState({
@@ -31,14 +32,18 @@ export default function AnswerTable({ tindex, qindex }) {
 				search: false,
 				paging: false,
 			}}
-			editable={{
-				onRowUpdate: (newData, oldData) => {
-					const thought = { ...thoughts[tindex] };
-					const questions = thought.questions;
-					questions[qindex].answer = newData.answer;
-					return dispatch(editThought(token, thought));
-				},
-			}}
+			editable={
+				isPsychologist
+					? {}
+					: {
+							onRowUpdate: (newData, oldData) => {
+								const thought = { ...thoughts[tindex] };
+								const questions = thought.questions;
+								questions[qindex].answer = newData.answer;
+								return dispatch(editThought(token, thought));
+							},
+					  }
+			}
 		/>
 	);
 }

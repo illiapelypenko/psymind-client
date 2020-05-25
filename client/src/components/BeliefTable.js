@@ -16,6 +16,7 @@ export default function BeliefTable({ index }) {
 	const beliefs = useSelector((state) => state.beliefs);
 	const token = useSelector((state) => state.token);
 	const dispatch = useDispatch();
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 
 	useEffect(() => {
 		const row = beliefs[index];
@@ -44,51 +45,58 @@ export default function BeliefTable({ index }) {
 				search: false,
 				paging: false,
 			}}
-			editable={{
-				onRowAdd: (newData) => {
-					const forr = newData.forr ? newData.forr : '';
-					const against = newData.against ? newData.against : '';
-					return dispatch(
-						editBelief(token, {
-							forr: [...beliefs[index].forr, forr],
-							against: [...beliefs[index].against, against],
-							id: beliefs[index]._id,
-						})
-					);
-				},
-				onRowUpdate: (newData, oldData) => {
-					const belief = { ...beliefs[index] };
-					belief.forr.splice(
-						belief.forr.indexOf(oldData.forr),
-						1,
-						newData.forr
-					);
-					belief.against.splice(
-						belief.against.indexOf(oldData.against),
-						1,
-						newData.against
-					);
-					return dispatch(
-						editBelief(token, {
-							forr: belief.forr,
-							against: belief.against,
-							id: belief._id,
-						})
-					);
-				},
-				onRowDelete: (oldData) => {
-					const belief = { ...beliefs[index] };
-					belief.forr.splice(belief.forr.indexOf(oldData.forr), 1);
-					belief.against.splice(belief.against.indexOf(oldData.against), 1);
-					return dispatch(
-						editBelief(token, {
-							forr: belief.forr,
-							against: belief.against,
-							id: belief._id,
-						})
-					);
-				},
-			}}
+			editable={
+				isPsychologist
+					? {}
+					: {
+							onRowAdd: (newData) => {
+								const forr = newData.forr ? newData.forr : '';
+								const against = newData.against ? newData.against : '';
+								return dispatch(
+									editBelief(token, {
+										forr: [...beliefs[index].forr, forr],
+										against: [...beliefs[index].against, against],
+										id: beliefs[index]._id,
+									})
+								);
+							},
+							onRowUpdate: (newData, oldData) => {
+								const belief = { ...beliefs[index] };
+								belief.forr.splice(
+									belief.forr.indexOf(oldData.forr),
+									1,
+									newData.forr
+								);
+								belief.against.splice(
+									belief.against.indexOf(oldData.against),
+									1,
+									newData.against
+								);
+								return dispatch(
+									editBelief(token, {
+										forr: belief.forr,
+										against: belief.against,
+										id: belief._id,
+									})
+								);
+							},
+							onRowDelete: (oldData) => {
+								const belief = { ...beliefs[index] };
+								belief.forr.splice(belief.forr.indexOf(oldData.forr), 1);
+								belief.against.splice(
+									belief.against.indexOf(oldData.against),
+									1
+								);
+								return dispatch(
+									editBelief(token, {
+										forr: belief.forr,
+										against: belief.against,
+										id: belief._id,
+									})
+								);
+							},
+					  }
+			}
 		/>
 	);
 }

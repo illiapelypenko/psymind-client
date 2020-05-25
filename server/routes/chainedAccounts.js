@@ -40,6 +40,7 @@ router.post('/chainedAccount', async (req, res) => {
 					{
 						name: user.name,
 						email: user.email,
+						token: jwt.sign({ _id: user._id }, 'PrivateKey'),
 					},
 				],
 			});
@@ -49,6 +50,7 @@ router.post('/chainedAccount', async (req, res) => {
 					{
 						name: newChainedAccount.name,
 						email: newChainedAccount.email,
+						token: jwt.sign({ _id: newChainedAccount._id }, 'PrivateKey'),
 					},
 				],
 			});

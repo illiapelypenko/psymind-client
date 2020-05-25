@@ -26,7 +26,7 @@ export default function PsyTable({ index }) {
 			style={{
 				marginBottom: '20px',
 			}}
-			title='My Clients'
+			title={isPsychologist ? 'My clients' : 'My psychologists'}
 			columns={state.columns}
 			data={state.data}
 			options={{

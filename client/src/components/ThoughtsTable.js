@@ -8,6 +8,7 @@ export default function ThoughtsTable() {
 	const thoughts = useSelector((state) => state.thoughts);
 	const token = useSelector((state) => state.token);
 	const dispatch = useDispatch();
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 
 	const [state, setState] = useState({
 		columns: [{ title: 'Thought', field: 'name' }],
@@ -26,23 +27,28 @@ export default function ThoughtsTable() {
 			options={{
 				paging: false,
 			}}
-			editable={{
-				onRowAdd: (newData) => {
-					return dispatch(
-						addThought(token, {
-							name: newData.name,
-						})
-					);
-				},
-				onRowUpdate: (newData, oldData) =>
-					dispatch(
-						editThought(token, {
-							name: newData.name,
-							id: oldData._id,
-						})
-					),
-				onRowDelete: (oldData) => dispatch(removeThought(token, oldData._id)),
-			}}
+			editable={
+				isPsychologist
+					? {}
+					: {
+							onRowAdd: (newData) => {
+								return dispatch(
+									addThought(token, {
+										name: newData.name,
+									})
+								);
+							},
+							onRowUpdate: (newData, oldData) =>
+								dispatch(
+									editThought(token, {
+										name: newData.name,
+										id: oldData._id,
+									})
+								),
+							onRowDelete: (oldData) =>
+								dispatch(removeThought(token, oldData._id)),
+					  }
+			}
 			detailPanel={(rowData) => {
 				return (
 					<QuestionsTable

@@ -25,6 +25,7 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import ThoughtsTable from './ThoughtsTable';
 import EventsTable from './EventsTable';
 import MainPage from './MainPage';
+import ClientChooser from './ClientChooser';
 
 const drawerWidth = 240;
 
@@ -171,6 +172,7 @@ export default function Dashboard() {
 						className={classes.name}>
 						{isPsychologist ? 'Psychologist' : 'Client'} - {userName}
 					</Typography>
+					{isPsychologist ? <ClientChooser /> : null}
 					<IconButton color='inherit' onClick={handleLogOut}>
 						<Badge color='secondary'>
 							<ExitToAppIcon />

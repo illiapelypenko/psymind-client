@@ -12,6 +12,9 @@ const initialState = {
 	events: [],
 	isPsychologist: false,
 	chainedAccounts: [],
+	currentClientName: '',
+	currentClientToken: '',
+	currentClientId: '',
 };
 
 export default createStore(

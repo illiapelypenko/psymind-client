@@ -99,6 +99,7 @@ export function getEvents(token) {
 		});
 
 		const events = res.data;
+		// debugger;
 		return dispatch({ type: 'SET_EVENTS', payload: events });
 	};
 }

@@ -8,6 +8,7 @@ export default function QuestionsTable({ tindex }) {
 	const thoughts = useSelector((state) => state.thoughts);
 	const token = useSelector((state) => state.token);
 	const dispatch = useDispatch();
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 
 	const [state, setState] = useState({
 		columns: [{ title: 'Question to the thought', field: 'question' }],

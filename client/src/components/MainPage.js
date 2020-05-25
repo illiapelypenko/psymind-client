@@ -25,8 +25,8 @@ const useStyles = makeStyles({
 export default function MainPage() {
 	const classes = useStyles();
 	const isPsychologist = useSelector((state) => state.isPsychologist);
-	const chainedAccounts = useSelector((state) => state.chainedAccounts);
 	const token = useSelector((state) => state.token);
+	const chainedAccounts = useSelector((state) => state.chainedAccounts);
 	const dispatch = useDispatch();
 	const [clientId, setClientId] = useState('');
 

@@ -6,6 +6,7 @@ import { addEvent, removeEvent, editEvent } from '../redux/actions';
 export default function EventsTable() {
 	const events = useSelector((state) => state.events);
 	const token = useSelector((state) => state.token);
+	const isPsychologist = useSelector((state) => state.isPsychologist);
 	const dispatch = useDispatch();
 
 	const [state, setState] = useState({
@@ -29,27 +30,32 @@ export default function EventsTable() {
 			options={{
 				paging: false,
 			}}
-			editable={{
-				onRowAdd: (newData) => {
-					return dispatch(
-						addEvent(token, {
-							event: newData.event,
-							thoughts: newData.thoughts,
-							emotions: newData.emotions,
-						})
-					);
-				},
-				onRowUpdate: (newData, oldData) =>
-					dispatch(
-						editEvent(token, {
-							event: newData.event,
-							thoughts: newData.thoughts,
-							emotions: newData.emotions,
-							id: oldData._id,
-						})
-					),
-				onRowDelete: (oldData) => dispatch(removeEvent(token, oldData._id)),
-			}}
+			editable={
+				isPsychologist
+					? {}
+					: {
+							onRowAdd: (newData) => {
+								return dispatch(
+									addEvent(token, {
+										event: newData.event,
+										thoughts: newData.thoughts,
+										emotions: newData.emotions,
+									})
+								);
+							},
+							onRowUpdate: (newData, oldData) =>
+								dispatch(
+									editEvent(token, {
+										event: newData.event,
+										thoughts: newData.thoughts,
+										emotions: newData.emotions,
+										id: oldData._id,
+									})
+								),
+							onRowDelete: (oldData) =>
+								dispatch(removeEvent(token, oldData._id)),
+					  }
+			}
 		/>
 	);
 }
