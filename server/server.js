@@ -9,13 +9,12 @@ const beliefs = require('./routes/beliefs');
 const thoughts = require('./routes/thoughts');
 const events = require('./routes/events');
 const chainedAccounts = require('./routes/chainedAccounts');
-const app = express();
 
+const app = express();
 const { port } = require('./config');
 
 app.use(bodyParser.json());
 app.use(cors());
-
 app.use('/api/tables', tables);
 app.use('/api/clients', clients);
 app.use('/api/beliefs', beliefs);
